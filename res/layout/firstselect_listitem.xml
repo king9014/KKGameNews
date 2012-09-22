@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="75dp"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/firstselect_listitem"
+        android:layout_width="85dp"
+        android:layout_height="75dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp" >
+
+        <ImageView
+            android:id="@+id/firstselect_listicon"
+            android:layout_width="81dp"
+            android:layout_height="73dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="1dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/firstselect_listtitle"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:singleLine="true"
+            android:textColor="#0d65bd"
+            android:textSize="14sp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/firstselect_listlookp"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:singleLine="true"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/firstselect_listvoicea"
+            android:layout_width="fill_parent"
+            android:layout_height="18dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:singleLine="true"
+            android:textColor="#808080"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/firstselect_listdate"
+            android:layout_width="fill_parent"
+            android:layout_height="17dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:singleLine="true"
+            android:textColor="#808080"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
