@@ -1,7 +1,6 @@
 package com.kk.activity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,24 +9,31 @@ import cn.dreamfield.parser.DreamFieldReader;
 import cn.dreamfield.parser.NewsRes;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class PcGameNewsActivity extends Activity implements OnClickListener,OnScrollListener {
+public class PcGameNewsActivity extends Activity implements OnClickListener, OnScrollListener, OnItemClickListener {
     /** Called when the activity is first created. */
 	private TextView maintext1;
 	private TextView maintext2;
@@ -43,14 +49,43 @@ public class PcGameNewsActivity extends Activity implements OnClickListener,OnSc
 	
 	public static int NEWS_TOTAL = 0;
 	private int offset = 0;
-	private int page = 0;
+	//private int page = 0;
 	private int rows = 8;
 	private String category = "pcnews";
+	
+	private static int UPDATE_LIST = 1;
+	private static int ABOUT = 2;
+	private static int EXIT = 3;
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO Auto-generated method stub
+		if(item.getItemId() == UPDATE_LIST) {
+			showProgress();
+			getNews();
+		} else if(item.getItemId() == ABOUT) {
+			Toast.makeText(PcGameNewsActivity.this, "梦野小组出品  v1.4 QQ:328184052", Toast.LENGTH_LONG).show();
+		} else if(item.getItemId() == EXIT) {
+			PcGameNewsActivity.this.finish();
+		}
+		return super.onMenuItemSelected(featureId, item);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		menu.add(0, UPDATE_LIST, 1, "刷新");
+    	menu.add(0, ABOUT, 2, "关于");
+    	menu.add(0, EXIT, 3, "退出");
+		return super.onCreateOptionsMenu(menu);
+	}
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pcgamenews);
+        
         maintext1 = (TextView)findViewById(R.id.maintext1);
         maintext2 = (TextView)findViewById(R.id.maintext2);
         maintext3 = (TextView)findViewById(R.id.maintext3);
@@ -69,7 +104,7 @@ public class PcGameNewsActivity extends Activity implements OnClickListener,OnSc
     }
     
     public void updateNews() {
-    	page ++;
+    	//page ++;
     	offset = offset + rows;
     	if(offset >= NEWS_TOTAL) {
     		more.setText("木有更多了哦！");
@@ -85,7 +120,7 @@ public class PcGameNewsActivity extends Activity implements OnClickListener,OnSc
     private TextView more;
     public void getNews() {
     	offset = 0;
-    	page = 0;
+    	//page = 0;
     	rows = 8;
     	mainlinear_middle.removeAllViews();
     	newsRess.clear();
@@ -98,6 +133,7 @@ public class PcGameNewsActivity extends Activity implements OnClickListener,OnSc
     	firstselectlistview = (ListView)findViewById(R.id.cartoonnews_list);
     	firstselectlistview.addFooterView(listBottom);
     	firstselectlistview.setOnScrollListener(this);
+    	firstselectlistview.setOnItemClickListener(this);
     	Thread t = new Thread(new ImageDownloadThread());
     	t.start();
     }
@@ -210,21 +246,63 @@ public class PcGameNewsActivity extends Activity implements OnClickListener,OnSc
 		}
 	}
 	private int lastItem;
-	private int firstItem;
+	//private int firstItem;
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		lastItem = firstVisibleItem + visibleItemCount - 1; 
-		firstItem = firstVisibleItem; 
-		System.out.println("firstItem=" + firstItem); 
-		System.out.println("lastItem=" + lastItem); 
+		//firstItem = firstVisibleItem; 
+		//System.out.println("firstItem=" + firstItem); 
+		//System.out.println("lastItem=" + lastItem); 
 	}
 
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		System.out.println("scrollState=" + scrollState);
+		//System.out.println("scrollState=" + scrollState);
 		if(lastItem >= NEWS_TOTAL || lastItem >= (offset + rows)) {
 			if(scrollState == SCROLL_STATE_IDLE || scrollState == SCROLL_STATE_FLING) {
 				updateNews();
 			}
 		}
 	}
+
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		ListView listView = (ListView)arg0;
+		NewsRes ele = (NewsRes)listView.getItemAtPosition(position);
+		String url = ele.getUrl();
+		int id = Integer.parseInt(ele.getId());
+		int total = ele.getPageTotal();
+		//Toast.makeText(PcGameNewsActivity.this, "TEST....", Toast.LENGTH_LONG).show();
+		Intent it = new Intent();
+		it.setClass(PcGameNewsActivity.this, PcNewsContentActivity.class);
+		it.putExtra("url", url);
+		it.putExtra("id", id);
+		it.putExtra("total", total);
+		
+		PcGameNewsActivity.this.startActivity(it);
+	}
+	
+	protected void dialog() {
+		AlertDialog.Builder builder = new Builder(PcGameNewsActivity.this);
+		builder.setMessage("确认退出吗？");
+		builder.setTitle("提示");
+		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				PcGameNewsActivity.this.finish();
+			}
+		});
+		builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {  
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {  
+            dialog();  
+            return true;  
+        }  
+        return super.onKeyDown(keyCode, event);
+    }
 }

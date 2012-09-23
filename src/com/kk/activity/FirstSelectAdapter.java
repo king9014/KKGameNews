@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,7 +56,6 @@ public class FirstSelectAdapter extends BaseAdapter{
 		private ImageView icon;
 		private TextView title;
 		private TextView lookp;
-		private TextView voicea;
 		private TextView date;
 		private View baseView;
 		public ViewHolder(View baseView) {  
@@ -81,7 +79,6 @@ public class FirstSelectAdapter extends BaseAdapter{
 			convertView.setTag(holder);
 			holder.title= (TextView) convertView.findViewById(R.id.firstselect_listtitle);
 			holder.lookp = (TextView) convertView.findViewById(R.id.firstselect_listlookp);
-			holder.voicea = (TextView) convertView.findViewById(R.id.firstselect_listvoicea);
 			holder.date = (TextView) convertView.findViewById(R.id.firstselect_listdate);
 			convertView.setTag(holder);
 		}else{
@@ -112,9 +109,8 @@ public class FirstSelectAdapter extends BaseAdapter{
 			//l.setVisibility(View.GONE);
 		}
 		holder.title.setText(items.get(position).getTitle());
-		holder.lookp.setText("看点："+items.get(position).getIntro());
-		holder.voicea.setText("声优："+items.get(position).getUrl());
-		holder.date.setText("时间："+items.get(position).getDate());
+		holder.lookp.setText(items.get(position).getIntro());
+		holder.date.setText("时间:"+items.get(position).getDate());
 		return convertView;
 	}
 	

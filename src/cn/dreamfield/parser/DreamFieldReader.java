@@ -20,6 +20,41 @@ import com.kk.activity.PcGameNewsActivity;
 
 public class DreamFieldReader {
 	
+	public static PageShow getPageFromJSON(String url) {
+		String content = getRsFromDreamField(url);
+		PageShow ps = null;
+		JsonReader jsonReader = new JsonReader(new StringReader(content));
+		try {
+			jsonReader.beginArray();
+			while(jsonReader.hasNext()) {
+				jsonReader.beginObject();
+				ps = new PageShow();
+				while(jsonReader.hasNext()) {
+					String tagName = jsonReader.nextName();
+					if("id".equals(tagName)) {
+						ps.setId(jsonReader.nextInt());
+					} else if("pid".equals(tagName)) {
+						try {
+							ps.setPid(jsonReader.nextInt());
+						} catch (Exception e) {
+							jsonReader.nextNull();
+							ps.setPid(0);
+						}
+					} else if("page_corrent".equals(tagName)) {
+						ps.setPageCurrent(jsonReader.nextInt());
+					} else if("html_url".equals(tagName)) {
+						ps.setHtmlUrl(jsonReader.nextString());
+					}
+				}
+				jsonReader.endObject();
+			}
+			jsonReader.endArray();
+		} catch(Exception e) {
+			ps = null;
+		}
+		return ps;
+	}
+	
 	public static void getNewResFromJSON(String url, ArrayList<NewsRes> newsRess) {
 		String content = getRsFromDreamField(url);
 		JsonReader jsonReader = new JsonReader(new StringReader(content));
@@ -42,12 +77,14 @@ public class DreamFieldReader {
 								newsRes.setTitle(jsonReader.nextString());
 							} else if("date".equals(tagName)) {
 								newsRes.setDate(jsonReader.nextString());
+							} else if("page_total".equals(tagName)) {
+								newsRes.setPageTotal(jsonReader.nextInt());
 							} else if("intro".equals(tagName)) {
 								try {
 									newsRes.setIntro(jsonReader.nextString());
 								} catch (Exception e) {
 									jsonReader.nextNull();
-									newsRes.setIntro(null);
+									newsRes.setIntro("作者好像没有留下导读...");
 								}
 							} else if("html_url".equals(tagName)) {
 								newsRes.setUrl(jsonReader.nextString());

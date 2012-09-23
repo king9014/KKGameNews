@@ -5,12 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
+import android.content.Context;
 import android.os.Environment;
 
 public class FileUtils {
@@ -87,5 +88,56 @@ public class FileUtils {
 		return file;
 	}
 	
+	public String readLock2(Context context){
+		String str = null;
+		/*test
+		 * System.out.println("path--->"+path);
+		System.out.println("name--->"+fileName);*/
+		try{
+/*			creatSDDir(path);
+			file = creatFileInSDCard(fileName, path);*/
+			FileInputStream fis = context.openFileInput("temp2.dat");
+			//FileOutputStream fis = context.openFileOutput("temp.dat", Context.MODE_PRIVATE);
+			//FileOutputStream fis = new FileOutputStream(file);
+			InputStreamReader isw = new InputStreamReader(fis);
+			BufferedReader reader = new BufferedReader(isw);
+			
+			str = reader.readLine();
+			reader.close();
+			//osw.write(Spider.getContent(url).toCharArray());
+			
+		}
+		catch(Exception e){
+		}
+		finally{
 
+		}
+		return str;
+	}
+	
+	public File writeLock2(String str, Context context){
+		File file = null;
+		/*test
+		 * System.out.println("path--->"+path);
+		System.out.println("name--->"+fileName);*/
+		try{
+/*			creatSDDir(path);
+			file = creatFileInSDCard(fileName, path);*/
+			FileOutputStream fis = context.openFileOutput("temp2.dat", Context.MODE_PRIVATE);
+			//FileOutputStream fis = new FileOutputStream(file);
+			OutputStreamWriter osw = new OutputStreamWriter(fis);
+			BufferedWriter writer = new BufferedWriter(osw);
+			writer.write(str);
+			writer.close();
+			//osw.write(Spider.getContent(url).toCharArray());
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+
+		}
+		return file;
+	}
 }

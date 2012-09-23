@@ -30,34 +30,24 @@
         <TextView
             android:id="@+id/firstselect_listtitle"
             android:layout_width="fill_parent"
-            android:layout_height="20dp"
+            android:layout_height="21dp"
             android:gravity="center_vertical"
             android:paddingLeft="2dp"
             android:paddingTop="2dp"
             android:singleLine="true"
             android:textColor="#0d65bd"
-            android:textSize="14sp" >
+            android:textSize="15sp" >
         </TextView>
 
         <TextView
             android:id="@+id/firstselect_listlookp"
             android:layout_width="fill_parent"
-            android:layout_height="20dp"
+            android:layout_height="35dp"
             android:gravity="center_vertical"
+            android:lines="2"
             android:paddingLeft="4dp"
-            android:singleLine="true"
             android:textColor="#808080"
             android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/firstselect_listvoicea"
-            android:layout_width="fill_parent"
-            android:layout_height="18dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="4dp"
-            android:singleLine="true"
-            android:textColor="#808080"
-            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/firstselect_listdate"

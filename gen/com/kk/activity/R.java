@@ -23,30 +23,37 @@ public final class R {
         public static final int line_forexlist=0x7f020009;
         public static final int main_tab_frame_tabspec_background_current=0x7f02000a;
         public static final int main_tab_frame_tabwidget_background_img=0x7f02000b;
-        public static final int seven9=0x7f02000c;
-        public static final int shine=0x7f02000d;
-        public static final int t_b=0x7f02000e;
-        public static final int title_bg=0x7f02000f;
+        public static final int no_ad=0x7f02000c;
+        public static final int seven9=0x7f02000d;
+        public static final int shine=0x7f02000e;
+        public static final int t_b=0x7f02000f;
+        public static final int title_bg=0x7f020010;
     }
     public static final class id {
-        public static final int cartoonnews_list=0x7f050006;
-        public static final int firstselect_listdate=0x7f050005;
+        public static final int adViewLayout=0x7f050014;
+        public static final int bottom_linearcontent=0x7f050012;
+        public static final int cartoonnews_list=0x7f050005;
+        public static final int firstselect_listdate=0x7f050004;
         public static final int firstselect_listicon=0x7f050001;
         public static final int firstselect_listitem=0x7f050000;
         public static final int firstselect_listlookp=0x7f050003;
         public static final int firstselect_listtitle=0x7f050002;
-        public static final int firstselect_listvoicea=0x7f050004;
-        public static final int main_linear_bottom=0x7f05000b;
-        public static final int main_linear_middle=0x7f050011;
-        public static final int main_linear_top=0x7f050009;
-        public static final int maintext1=0x7f05000c;
-        public static final int maintext2=0x7f05000d;
-        public static final int maintext3=0x7f05000e;
-        public static final int maintext4=0x7f05000f;
-        public static final int maintext5=0x7f050010;
-        public static final int maintext_top=0x7f05000a;
-        public static final int more_list=0x7f050007;
-        public static final int refresh_list=0x7f050008;
+        public static final int gamecontent_current=0x7f050016;
+        public static final int gamecontent_group=0x7f050011;
+        public static final int gamecontent_next=0x7f050017;
+        public static final int gamecontent_previous=0x7f050015;
+        public static final int main_linear_bottom=0x7f05000a;
+        public static final int main_linear_middle=0x7f050010;
+        public static final int main_linear_top=0x7f050008;
+        public static final int maintext1=0x7f05000b;
+        public static final int maintext2=0x7f05000c;
+        public static final int maintext3=0x7f05000d;
+        public static final int maintext4=0x7f05000e;
+        public static final int maintext5=0x7f05000f;
+        public static final int maintext_top=0x7f050009;
+        public static final int more_list=0x7f050006;
+        public static final int refresh_list=0x7f050007;
+        public static final int top_linearcontent=0x7f050013;
     }
     public static final class layout {
         public static final int firstselect_listitem=0x7f030000;
@@ -54,6 +61,7 @@ public final class R {
         public static final int list_bottom=0x7f030002;
         public static final int list_top=0x7f030003;
         public static final int pcgamenews=0x7f030004;
+        public static final int pcnews_content=0x7f030005;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

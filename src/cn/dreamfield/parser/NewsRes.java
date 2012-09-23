@@ -7,6 +7,13 @@ public class NewsRes {
 	private String intro;
 	private String url;
 	private String imgUrl;
+	private int pageTotal;
+	public int getPageTotal() {
+		return pageTotal;
+	}
+	public void setPageTotal(int pageTotal) {
+		this.pageTotal = pageTotal;
+	}
 	public String getId() {
 		return id;
 	}
