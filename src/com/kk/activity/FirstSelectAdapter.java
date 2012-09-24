@@ -1,9 +1,5 @@
 package com.kk.activity;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import com.kk.activity.AsyncImageLoader.ImageCallback;
@@ -114,19 +110,19 @@ public class FirstSelectAdapter extends BaseAdapter{
 		return convertView;
 	}
 	
-	public static Drawable loadImageFromUrl(String url) {
-        URL m;
-        InputStream i = null;
-        try {
-            m = new URL(url);
-            i = (InputStream) m.getContent();
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Drawable d = Drawable.createFromStream(i, "src");
-        return d;
-    }
+//	public static Drawable loadImageFromUrl(String url) {
+//        URL m;
+//        InputStream i = null;
+//        try {
+//            m = new URL(url);
+//            i = (InputStream) m.getContent();
+//        } catch (MalformedURLException e1) {
+//            e1.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Drawable d = Drawable.createFromStream(i, "src");
+//        return d;
+//    }
 
 }

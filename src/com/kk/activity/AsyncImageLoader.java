@@ -61,10 +61,12 @@ public class AsyncImageLoader {
             @Override
             public void run() {
                 Drawable drawable = loadImageFromUrl(imageUrl);
-                imageCache.put(imageUrl, new SoftReference<Drawable>(drawable));
-                Message message = handler.obtainMessage(0, drawable);
-                handler.sendMessage(message);
-                exportImage2File(imageUrl, drawable);
+                if(null != drawable) {
+	                imageCache.put(imageUrl, new SoftReference<Drawable>(drawable));
+	                Message message = handler.obtainMessage(0, drawable);
+	                handler.sendMessage(message);
+	                exportImage2File(imageUrl, drawable);
+                }
             }
         };
         mainThreadPool.execute(t);
@@ -167,9 +169,9 @@ public class AsyncImageLoader {
             m = new URL(url);
             i = (InputStream) m.getContent();
         } catch (MalformedURLException e1) {
-            e1.printStackTrace();
+            System.out.println(e1);
         } catch (IOException e) {
-            e.printStackTrace();
+        	System.out.println(e);
         }
         Drawable d = Drawable.createFromStream(i, "src");
         return d;

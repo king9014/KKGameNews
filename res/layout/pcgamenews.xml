@@ -4,21 +4,28 @@
     android:layout_height="fill_parent"
     android:background="#ffffff" >
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/main_linear_top"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:background="@drawable/title_bg" >
         <TextView
-                android:id="@+id/maintext_top"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:text="单机游戏资讯"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-    </LinearLayout>
+            android:id="@+id/maintext_top"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="单机游戏资讯"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+        <ImageView 
+            android:id="@+id/mainrefresh_top"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingRight="8dp"
+            android:layout_gravity="right"
+            android:src="@drawable/refresh"/>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/main_linear_bottom"

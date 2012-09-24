@@ -28,6 +28,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
 	private TextView maintext4;
 	private TextView maintext5;
 	private TextView maintext_top;
+	private ImageView main_refresh;
 	private LinearLayout mainlinear_middle;
 	private ListView firstselectlistview;
 	private ArrayList<NewsRes> newsRess = new ArrayList<NewsRes>(); 
@@ -91,6 +93,7 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
         maintext3 = (TextView)findViewById(R.id.maintext3);
         maintext4 = (TextView)findViewById(R.id.maintext4);
         maintext5 = (TextView)findViewById(R.id.maintext5);
+        main_refresh = (ImageView)findViewById(R.id.mainrefresh_top);
         maintext_top = (TextView)findViewById(R.id.maintext_top);
         mainlinear_middle = (LinearLayout)findViewById(R.id.main_linear_middle);   
         
@@ -99,6 +102,7 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
         maintext3.setOnClickListener(this);
         maintext4.setOnClickListener(this);
         maintext5.setOnClickListener(this);
+        main_refresh.setOnClickListener(this);
         showProgress();
         getNews();
     }
@@ -139,15 +143,23 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
     }
     class ImageDownloadThread implements Runnable {
 		public void run() {
-			String url = "http://dreamfield.cn/lib/searchnews.php?category="+category+"&offset="+offset+"&rows="+rows;
-	    	DreamFieldReader.getNewResFromJSON(url, newsRess);
+			try {
+				String url = "http://dreamfield.cn/lib/searchnews.php?category="+category+"&offset="+offset+"&rows="+rows;
+				DreamFieldReader.getNewResFromJSON(url, newsRess);
+	    	} catch (Exception e) {
+	    		netErrorHandler.sendEmptyMessage(0);
+	    	}
 	    	firstselecthandler.sendEmptyMessage(0);
 		}
     }
     class ImageDownloadThread2 implements Runnable {
 		public void run() {
-			String url = "http://dreamfield.cn/lib/searchnews.php?category="+category+"&offset="+offset+"&rows="+rows;
-	    	DreamFieldReader.getNewResFromJSON(url, newsRess);
+			try {
+				String url = "http://dreamfield.cn/lib/searchnews.php?category="+category+"&offset="+offset+"&rows="+rows;
+				DreamFieldReader.getNewResFromJSON(url, newsRess);
+			} catch (Exception e) {
+				netErrorHandler.sendEmptyMessage(0);
+	    	}
 	    	firstselecthandler2.sendEmptyMessage(0);
 		}
     }
@@ -166,6 +178,12 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
 			adapter.setItems(newsRess);
 			adapter.notifyDataSetChanged();
 	        hideProgress();
+		}
+    };
+    Handler netErrorHandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			Toast.makeText(PcGameNewsActivity.this, "Õ¯¬Á“Ï≥£...«Î…‘∫Û‘Ÿ ‘", Toast.LENGTH_LONG).show();
 		}
     };
     
@@ -215,6 +233,8 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
 			maintext4.setBackgroundResource(0);
 			maintext_top.setText("”Œœ∑«∞’∞");
 			this.category = "gamefuture";
+			getNews();
+		} else if(v == main_refresh) {
 			getNews();
 		}
 	}
@@ -266,6 +286,11 @@ public class PcGameNewsActivity extends Activity implements OnClickListener, OnS
 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		ListView listView = (ListView)arg0;
+		System.out.println("POSITION-->" + position);
+		if(position == NEWS_TOTAL) {
+			updateNews();
+			return;
+		}
 		NewsRes ele = (NewsRes)listView.getItemAtPosition(position);
 		String url = ele.getUrl();
 		int id = Integer.parseInt(ele.getId());

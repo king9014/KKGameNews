@@ -159,7 +159,11 @@ public class PcNewsContentActivity extends Activity implements OnClickListener {
 		if(v == backimg && canPage) {
 			canPage = false;
 			if(page > 1) {
-				PageShow ps = DreamFieldReader.getPageFromJSON(HTML_REQUEST_BACK + pid);
+				PageShow ps = null; 
+				try {
+					ps = DreamFieldReader.getPageFromJSON(HTML_REQUEST_BACK + pid);
+				} catch(Exception e) {//不处理异常，下面会给出用户提示
+				}
 				if(null == ps) {
 					canPage = true;
 					Toast.makeText(PcNewsContentActivity.this, "网络异常，请等下再试", Toast.LENGTH_LONG).show();
@@ -179,7 +183,11 @@ public class PcNewsContentActivity extends Activity implements OnClickListener {
 		} else if(v == nextimg && canPage) {
 			canPage = false;
 			if(page < total) {
-				PageShow ps = DreamFieldReader.getPageFromJSON(HTML_REQUEST_NEXT + id);
+				PageShow ps = null;
+				try {
+					ps = DreamFieldReader.getPageFromJSON(HTML_REQUEST_NEXT + id);
+				} catch(Exception e) {//不处理异常，下面会给出用户提示
+				}
 				if(null == ps) {
 					canPage = true;
 					Toast.makeText(PcNewsContentActivity.this, "网络异常，请等下再试", Toast.LENGTH_LONG).show();
